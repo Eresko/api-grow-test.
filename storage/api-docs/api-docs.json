@@ -1,0 +1,297 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TEST",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/clients": {
+            "get": {
+                "tags": [
+                    "Пользователи"
+                ],
+                "summary": "Список клиентов",
+                "operationId": "bad84c4cb889cf61476bac59a27d2c76",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "result"
+                                    ],
+                                    "properties": {
+                                        "result": {
+                                            "required": [
+                                                "currentPage",
+                                                "perPage",
+                                                "total",
+                                                "lastPage",
+                                                "data"
+                                            ],
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer"
+                                                },
+                                                "perPage": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string"
+                                                            },
+                                                            "birthday": {
+                                                                "type": "string"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/clients/count": {
+            "get": {
+                "tags": [
+                    "Пользователи"
+                ],
+                "summary": "кол-во пользователей",
+                "operationId": "8e63867bf53bb875669be0c2ead92efb",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "result"
+                                    ],
+                                    "properties": {
+                                        "result": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dispatch": {
+            "get": {
+                "tags": [
+                    "Отправка"
+                ],
+                "summary": "Статистика",
+                "operationId": "4c1c9811350a373fc8f93450c5324bbb",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "result"
+                                    ],
+                                    "properties": {
+                                        "result": {
+                                            "required": [
+                                                "currentPage",
+                                                "perPage",
+                                                "total",
+                                                "lastPage",
+                                                "data"
+                                            ],
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer"
+                                                },
+                                                "perPage": {
+                                                    "type": "integer"
+                                                },
+                                                "total": {
+                                                    "type": "integer"
+                                                },
+                                                "lastPage": {
+                                                    "type": "integer"
+                                                },
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "countOk": {
+                                                                "type": "integer"
+                                                            },
+                                                            "countFalse": {
+                                                                "type": "integer"
+                                                            },
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Отправка"
+                ],
+                "summary": "создвание рассылки",
+                "operationId": "dd8825ec6750b7cf3da86ff0ca6b425d",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "daily",
+                                    "time",
+                                    "text",
+                                    "before",
+                                    "after",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "daily": {
+                                        "description": "Флаг ежедневности",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "time": {
+                                        "description": "время выполнения",
+                                        "type": "string",
+                                        "example": "10:30"
+                                    },
+                                    "text": {
+                                        "description": "тест рассылки",
+                                        "type": "string",
+                                        "example": "Как дела"
+                                    },
+                                    "before": {
+                                        "description": "Кол-во дней до",
+                                        "type": "number",
+                                        "example": "4"
+                                    },
+                                    "after": {
+                                        "description": "Кол-во дней после",
+                                        "type": "number",
+                                        "example": "0"
+                                    },
+                                    "name": {
+                                        "description": "Название рассылки",
+                                        "type": "string",
+                                        "example": "10000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Упешная отправка",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "success",
+                                        "result"
+                                    ],
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
