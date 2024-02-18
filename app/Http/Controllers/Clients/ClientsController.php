@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Clients;
 
 use Illuminate\Http\Request;
 use App\Services\ClientsService;
-use App\Services\FilesService;
 
 
 class ClientsController {
