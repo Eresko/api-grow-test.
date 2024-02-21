@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Clients;
 
 use Illuminate\Http\Request;
 use App\Services\ClientsService;
-
+use App\Http\Requests\Clients\CreateClientsRequest;
+use App\Repository\ClientRepository;
 
 class ClientsController {
 
@@ -81,7 +82,7 @@ class ClientsController {
      */
     public function getClients(Request $request)
     {
-
+       
         return response()->json([
             'result' => $this->clientsService->list(intval($request->page),empty($request->search) ? "" : $request->search)
         ]);
@@ -113,6 +114,64 @@ class ClientsController {
 
         return response()->json([
             'result' => $this->clientsService->count()
+        ]);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/clients",
+     *     tags={"Пользователи"},
+     *     summary="создвание пользователя",
+     *    @OA\RequestBody(
+     *          @OA\JsonContent(
+     *                  type="object",
+     *                  required={"name","phone", "birthday"},
+     *                 @OA\Property(
+     *                      property="name",
+     *                      type="string",
+     *                      description="Имя",
+     *                      example="Сергей",
+     *                  ),
+     *                @OA\Property(
+     *                      property="phone",
+     *                      type="string",
+     *                      description="телефон",
+     *                      example="+79128060444",
+     *                  ),
+     *               @OA\Property(
+     *                      property="birthday",
+     *                      type="string",
+     *                      description="День рождения",
+     *                      example="1",
+     *                      example="2023-02-23",
+     *                  ),
+     *               @OA\Property(
+     *                      property="email",
+     *                      type="number",
+     *                      description="email",
+     *                      example="shadow_mag@mail.ru",
+     *                  ),
+     *           )
+     *      ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Упешная отправка",
+     *         @OA\JsonContent(
+     *                 type="object",
+     *                 required={"success","result"},
+     *                 @OA\Property(
+     *                     property="success",
+     *                     type="boolean",
+     *                 ),
+     *          ),
+     *     )
+     * )
+     */
+    public function createClients(CreateClientsRequest $request)
+    {
+
+        return response()->json([
+            'result' => $this->clientsService->create($request->toDto())
         ]);
     }
 

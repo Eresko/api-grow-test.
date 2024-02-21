@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::group([ 'prefix' => 'clients'], function () {
     Route::get('', [ClientsController::class, 'getClients']);
+    Route::post('', [ClientsController::class, 'createClients']);
     Route::get('/count', [ClientsController::class, 'getCountClients']);
 
 });

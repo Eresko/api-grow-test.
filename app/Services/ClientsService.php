@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Repository\ClientRepository;
+use App\Dto\ClientDto;
 use App\Dto\PaginationRequestDto;
 
 class ClientsService
@@ -36,6 +37,14 @@ class ClientsService
 
         return $this->clientRepository->count();
 
+    }
+
+    /**
+     * @param ClientDto $dto
+     * @return bool
+     */
+    public function create(ClientDto $dto):bool {
+        return $this->clientRepository->create($dto);
     }
 
 

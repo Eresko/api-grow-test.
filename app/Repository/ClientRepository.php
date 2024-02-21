@@ -6,6 +6,8 @@ use Illuminate\Support\Carbon;
 use App\Models\Client;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Dto\ClientDto;
+
 class ClientRepository
 {
 
@@ -32,8 +34,8 @@ class ClientRepository
             ->leftJoin('dispatches', 'dispatch_list.dispatch_id', '=', 'dispatches.id')
             ->where('dispatches.time',Carbon::now()->format('H:i:00'))
             ->select([
-                DB::raw('DATE_SUB(clients.birthday,INTERVAL dispatches.before DAY)  as date_before'),
-                DB::raw('DATE_ADD(clients.birthday,INTERVAL dispatches.after DAY)  as date_after'),
+                DB::raw('DATE_FORMAT(DATE_SUB(clients.birthday,INTERVAL dispatches.before DAY),"%m%d")  as date_before'),
+                DB::raw('DATE_FORMAT(DATE_ADD(clients.birthday,INTERVAL dispatches.after DAY),"%m%d")  as date_after'),
                 "clients.id AS id",
                 "clients.name AS name",
                 "clients.email AS email",
@@ -42,7 +44,7 @@ class ClientRepository
                 "dispatches.text AS text",
                 "dispatches.id AS dispatch_id"
             ])
-            ->get()->where('date_before','<',Carbon::now())->where('date_after','>',Carbon::now());
+            ->get()->where('date_before','<',Carbon::now()->format('md'))->where('date_after','>',Carbon::now()->format('md'));
 
 
     }
@@ -50,7 +52,16 @@ class ClientRepository
     public function count():int {
         return Client::query()->count();
     }
-    
+
+
+    public function create(ClientDto $dto):bool {
+
+       
+        $client = Client::create($dto->toArray());
+
+
+        return (!empty($client));
+    }
 
 
 }
